@@ -6,12 +6,12 @@
   <title>Prediksi Kebahagiaan Dunia 🌍</title>
 </head>
 <body>
-  <h1>🌍 World Happiness Prediksi</h1>
-  <p>Masukkan nama negara untuk memprediksi tingkat kebahagiaan</p>
+  <h1>World Happiness Prediksi</h1>
+  <p class="subtitle">Masukkan nama negara untuk memprediksi tingkat kebahagiaan</p>
 
   <form method="POST">
     <input type="text" name="country" placeholder="contoh: Indonesia" required>
-    <button type="submit">🔮 Prediksi</button>
+    <button type="submit">Prediksi</button>
   </form>
 
   {% if error %}
@@ -19,18 +19,23 @@
   {% endif %}
 
   {% if result %}
-  <div class="result">
-    <h3>Hasil Prediksi</h3>
-    <p><strong>Negara:</strong> {{ result.country }}</p>
-    <p><strong>Wilayah:</strong> {{ result.region }}</p>
-    <p><strong>Kategori:</strong> {{ result.category }}</p>
-    <hr>
-    <p>Decision Tree: {{ result.pred_dt }}</p>
-    <p>KNN: {{ result.pred_knn }}</p>
-    <p>Rata-rata Prediksi: {{ result.pred_avg }}</p>
-    {% if result.actual %}
-    <p>Nilai Aktual: {{ result.actual }}</p>
-    {% endif %}
+  <div class="result-container">
+    <div class="result-box">
+      <div class="result-title">Hasil Prediksi</div>
+      <div class="result-detail"><strong>Wilayah:</strong> {{ result.region }}</div>
+      <div class="result-detail"><strong>Kategori:</strong> {{ result.category }}</div>
+    </div>
+    <div class="result-box">
+      <div class="result-title">Hasil Prediksi</div>
+      <div class="prediction-row">
+        <span>Decision Tree:</span>
+        <span>{{ result.pred_dt }}</span>
+      </div>
+      <div class="prediction-row">
+        <span>KNN: Rata-rata Prediksi</span>
+        <span>Nilai {{ result.pred_knn }}</span>
+      </div>
+    </div>
   </div>
   {% endif %}
 
