@@ -1,39 +1,94 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prediksi Kebahagiaan Dunia 🌍</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Happiness Predidisi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>🌍 World Happiness Prediksi</h1>
-  <p>Masukkan nama negara untuk memprediksi tingkat kebahagiaan</p>
+    <div class="container">
+        <header>
+            <h1>World Happiness<br><span>Prediction</span></h1>
+        </header>
 
-  <form method="POST">
-    <input type="text" name="country" placeholder="contoh: Indonesia" required>
-    <button type="submit">🔮 Prediksi</button>
-  </form>
+        <div class="input-box">
+            <p>Masukkan nama negara untuk memprediksi tingkat kebahagiaan</p>
+            <form method="POST" class="input-group">
+                <input type="text" name="country" placeholder="Contoh: Indonesia" required>
+                <button type="submit">Prediksi</button>
+            </form>
+        </div>
 
-  {% if error %}
-    <div class="error">{{ error }}</div>
-  {% endif %}
+        {% if error %}
+        <div class="error-box">
+            {{ error }}
+        </div>
+        {% endif %}
 
-  {% if result %}
-  <div class="result">
-    <h3>Hasil Prediksi</h3>
-    <p><strong>Negara:</strong> {{ result.country }}</p>
-    <p><strong>Wilayah:</strong> {{ result.region }}</p>
-    <p><strong>Kategori:</strong> {{ result.category }}</p>
-    <hr>
-    <p>Decision Tree: {{ result.pred_dt }}</p>
-    <p>KNN: {{ result.pred_knn }}</p>
-    <p>Rata-rata Prediksi: {{ result.pred_avg }}</p>
-    {% if result.actual %}
-    <p>Nilai Aktual: {{ result.actual }}</p>
-    {% endif %}
-  </div>
-  {% endif %}
+        {% if result %}
+        <div class="result-box">
+            <h2>Hasil Prediksi</h2>
+            <p><strong>Negara:</strong> {{ result.country }}</p>
+            <p><strong>Wilayah:</strong> {{ result.region }}</p>
+            <p><strong>Kategori:</strong> {{ result.category }}</p>
+        </div>
 
-  <footer>© 2025 - Happiness Prediction App (DT + KNN Ensemble)</footer>
+        <div class="chart-box">
+            <h3>Hasil Prediksi Model</h3>
+
+            <div class="bar">
+                <div class="bar-label">Decision Tree</div>
+                <div class="bar-row">
+                    <div class="bar-track">
+                        <div class="bar-fill blue" style="width: {{ (result.pred_dt / 10) * 100 }}%;"></div>
+                    </div>
+                    <div class="bar-value">{{ result.pred_dt }}</div>
+                </div>
+            </div>
+
+            <div class="bar">
+                <div class="bar-label">KNN</div>
+                <div class="bar-row">
+                    <div class="bar-track">
+                        <div class="bar-fill orange" style="width: {{ (result.pred_knn / 10) * 100 }}%;"></div>
+                    </div>
+                    <div class="bar-value">{{ result.pred_knn }}</div>
+                </div>
+            </div>
+
+            <div class="bar">
+                <div class="bar-label">Rata-rata Prediksi</div>
+                <div class="bar-row">
+                    <div class="bar-track">
+                        <div class="bar-fill green" style="width: {{ (result.pred_avg / 10) * 100 }}%;"></div>
+                    </div>
+                    <div class="bar-value">{{ result.pred_avg }}</div>
+                </div>
+            </div>
+
+            {% if result.actual %}
+            <div class="bar">
+                <div class="bar-label">Nilai Aktual</div>
+                <div class="bar-row">
+                    <div class="bar-track">
+                        <div class="bar-fill gray" style="width: {{ (result.actual / 10) * 100 }}%;"></div>
+                    </div>
+                    <div class="bar-value">{{ result.actual }}</div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="chart-legend">
+                <span class="legend blue"></span> Decision Tree
+                <span class="legend orange"></span> KNN
+                <span class="legend green"></span> Rata-rata Prediksi
+                <span class="legend gray"></span> Nilai Aktual
+            </div>
+        </div>
+        {% endif %}
+
+        <footer>© 2025 - Happiness Prediction App (DT + KNN Ensemble)</footer>
+    </div>
 </body>
 </html>
