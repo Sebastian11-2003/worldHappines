@@ -3,16 +3,13 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# Inisialisasi Flask
 app = Flask(__name__)
 
-# Load model dan transformer
 poly = joblib.load("models/poly.pkl")
 scaler = joblib.load("models/scaler.pkl")
 dt_model = joblib.load("models/best_dt.pkl")
 knn_model = joblib.load("models/best_knn.pkl")
 
-# Fungsi prediksi
 def prediksi_negara(nama_negara):
     df = pd.read_csv("data/world-happiness-report-2021.csv")
     row = df[df["Country name"].str.lower() == nama_negara.lower()]
@@ -50,7 +47,6 @@ def prediksi_negara(nama_negara):
         "category": tingkat,
     }
 
-# Route utama
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = None
@@ -68,6 +64,5 @@ def index():
     return render_template("index.html", result=result, error=error)
 
 
-# Jalankan Flask
 if __name__ == "__main__":
     app.run(debug=True)
